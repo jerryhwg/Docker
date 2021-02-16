@@ -53,3 +53,15 @@ docker-compose.yml
 --->
 docker-compose up [--build]
 ```
+
+launch in background
+
+```console
+docker-compose up -d
+```
+
+stop containers
+
+```console
+docker-compose down
+```
