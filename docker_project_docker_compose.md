@@ -65,3 +65,9 @@ stop containers
 ```console
 docker-compose down
 ```
+
+container status
+
+```console
+docker-compose ps
+```

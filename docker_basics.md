@@ -31,6 +31,7 @@ docker logs <container id>
 ```
 
 stop container
+
 ```console
 # SIGTERM (10 seconds, recommended)
 docker stop <container id>
@@ -119,6 +120,8 @@ docker run jerryhwang72/redis
 * jerryhwang72: docker id
 * redis: repo/project name
 * latest: version
+
+`NOTE: docker build -t jerryhwang/app-dev -f Dockerfile.dev .`
 
 (Optional) Create a docker image with docker commit
 
