@@ -10,7 +10,7 @@ GitHub
 
 https://github.com/jerryhwg/docker-react
 
-Workflow
+## Workflow
 
 1. Tell Travis we need a copy of docker running (.travis.yml)
     
@@ -42,3 +42,21 @@ Workflow
     - 2.16.4 (Recommended)
     - Sample application
     ```
+
+## Appendix
+
+.travis.yml
+
+```yaml
+language: generic
+
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t jerryhwang72/docker-react -f Dockerfile.dev .
+
+script:
+  - docker run -e CI=true jerryhwang72/docker-react npm run test -- --coverage
+```
