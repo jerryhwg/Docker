@@ -1,4 +1,4 @@
-# Docker Project Example: Workflow with React
+# Docker Project Example: React (CI/CD 1)
 
 Install NodeJS
 

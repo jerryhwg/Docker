@@ -1,5 +1,7 @@
 # Docker Project Example: Docker Compose & Multiple Local Containers
 
+Use docker-compose to run multiple containers on docker platform.
+
 Docker Container ( NodeJS App ) ---> Docker Container ( Redis )
 
 Dockerfile

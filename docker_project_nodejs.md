@@ -1,7 +1,5 @@
 # Docker Project Example : NodeJS
 
-NodeJS
-
 1. Createa NodeJS web app
 2. Create a Dockerfile
 3. Build image from dockerfile

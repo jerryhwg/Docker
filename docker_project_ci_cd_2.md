@@ -1,8 +1,10 @@
-# Continuous Integration and Deployment
+# Continuous Integration and Deployment (CI/CD 2)
 
 ```
-GitHub [feature branch ---> master] ---> CI ---> AWS
+GitHub [feature branch ---> master] ---> CI ---> AWS (elastic beanstalk)
 ```
+
+Changes in feature branch merged into master triggers CI to launch docker to run test and build docker image for production and deploy to AWS (docker platform) automatically
 
 GitHub
 
@@ -10,7 +12,7 @@ https://github.com/jerryhwg/docker-react
 
 Workflow
 
-1. Tell Travis we need a copy of docker running
+1. Tell Travis we need a copy of docker running (.travis.yml)
     
     ```
     sudo 

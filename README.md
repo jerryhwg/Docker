@@ -8,6 +8,6 @@ Docker knowledge share (public)
 
 [Docker Project Example: Docker-compose](docker_project_docker_compose.md)
 
-[Docker Project Example: Workflow](docker_project_workflow.md)
+[Docker Project Example: React (CI/CD 1)](docker_project_ci_cd_1.md)
 
-[Continuous Integration and Deployment](docker_project_ci_cd.md)
+[Continuous Integration and Deployment (CI/CD 2)](docker_project_ci_cd_2.md)

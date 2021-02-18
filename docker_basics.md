@@ -1,6 +1,8 @@
 # Docker How To
 
-Docker Desktop
+Use Docker CLI and Dockerfile to build a docker image.
+
+Docker Desktop Install
 
 * [Docker for windows 10 Professional](https://hub.docker.com/editions/community/docker-ce-desktop-windows/)
 * [Docker for Mac](https://hub.docker.com/editions/community/docker-ce-desktop-mac/)
