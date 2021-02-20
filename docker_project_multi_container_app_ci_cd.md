@@ -50,3 +50,5 @@ after_success:
 ```
 
 ### Deploy to AWS EB
+
+dockerrun.aws.json (container definitions) ---> AWS EB
