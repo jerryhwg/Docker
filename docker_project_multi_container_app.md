@@ -12,14 +12,59 @@ Challenges
 Build App
 
 ```
-Nginx -> React Server(front-end) / Express Server(backend API)  -> Redis(Worker) / Postgres(permanent DB)
+Nginx -> React Server(front-end) / Express Server(backend API)  -> Redis(Cache)[<-> Worker] / Postgres(permanent DB)
 ```
 
 ### Worker
 
-NodeJS
+**NodeJS**
 
 watches redis for new indices, pulls each new indice, calculates new value then puts it back into redis
+
+package.json
+
+```javascript
+{
+    "dependenices": {
+        "nodemon": "1.18.3"
+        "redis": "2.8.0" # redis client
+    },
+    "scripts": {
+        "start": "node index.js",
+        "dev": "nodemon"
+    }
+}
+```
+
+index.js
+
+```javascript
+const keys = require('./keys');
+const redis = require('redis');
+
+const redisClient = redis.createClient({
+    host: keys.redisHost,
+    port: keys.redisPort,
+    retry_strategy: () => 1000
+});
+const sub = redisClient.duplicate();
+
+function fib(index)
+
+sub.on('message', (channel, message) => {
+    redisClient.hset('values', message, fib(parseInt(message)));
+});
+sub.subscribe('insert');
+```
+
+keys.js
+
+```javascript
+module.exports = {
+    redisHost: process.env.REDIS_HOST,
+    redisPort: process.env.REDIS_PORT
+};
+```
 
 ### Redis
 
@@ -33,18 +78,105 @@ stores a permanent list of indices that have been received
 
 Server (express)
 
-backend API to redis and postgres
+Backend API to redis and postgres
+
+package.json
+
+```javascript
+{
+    "dependenices": {
+        "express": "4.16.3",
+        "pg": "7.4.3",
+        "redis": "2.8.0",
+        "cors": "2.8.4",
+        "nodemon": "1.18.3"
+    },
+    "scripts": {
+        "dev": "nodemon",
+        "start": "node index.js"
+    }
+}
+```
+
+keys.js
+
+```javascript
+module.exports = {
+    redisHost: process.env.REDIS_HOST,
+    redisPort: process.env.REDIS_PORT,
+    pgUser: process.env.PGUSER,
+    pgHost: process.env.PGHOST,
+    pgDatabase: process.env.PGDATABASE,
+    pgPassword: process.env.PGPASSWORD,
+    pgPort: process.env.PGPORT
+};
+```
+
+index.js
+
+```javascript
+// Express App Setup
+
+// Postgres Client Setup
+const { Pool } = require('pg');
+const pgClient = new Pool({
+    user: keys.pgUser,
+    host: keys.pgHost,
+    database: keys.pgDatabase,
+    password: keys.pgPassword,
+    port: keys.pgPort
+});
+
+pgClient.query('CREATE TABLE IF NOT EXISTS values (number INT)')
+
+// Redis Client Setup
+const redis = require('redis');
+const redisClient = redis.createClient({
+    host: keys.redisHost,
+    port: keys.redisPort,
+    retryStrategy: () => 1000
+});
+
+// Express route handlers
+app.get('/', (req, res) => {
+    res.send('Hi');
+});
+
+app.get('/values/all', async (req, res) => {
+    const values = await pgClient.query('SELECT * from values')
+
+    res.send(values.rows);
+});
+
+app.get('/values/current', async (req, res) => {
+    redisClient.hgetall('values', (err,values) => {
+        res.send(values);
+    });
+});
+
+...
+...
+
+app.listen(5000, err => {
+    console.log('Listening');
+});
+```
 
 ### React App
 
 Client (React)
 
-front-end (html, css, js)
+Front-end (html, css, js)
 
 ```
 npx create-react-app client
 cd client
 rm -r .git
+```
+
+```javascript
+import React, { Component } from 'react';
+import axios from 'axios';
 ```
 
 ## Dockerizing Apps
